@@ -1,0 +1,161 @@
+<html>
+<head>
+<style>
+.button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+</style>
+<script>
+var qno=0;
+var score=0;
+var cnt=0;
+var qno1=0;
+var qno2=1;
+var qno3=2;
+</script>
+</head>
+
+<body>
+
+<div id="clock">
+<label id="minsleft"> time</label>:<label id="secleft">time</label>
+</div>
+<div id="questionset">
+<fieldset>
+<label id="question">Question</label><br>
+<label id="op1">op1</label><input type="radio" name="option"  id="option1" value="1"><br>
+<label id="op2">op2</label><input type="radio" name="option"  id="option2" value="2"><br>
+<label id="op3">op3</label><input type="radio" name="option"  id="option3" value="3"><br>
+</fieldset>
+<div class="button" onclick="checkanswer();">Submit and Proceed</Button>
+
+</div>
+</div>
+
+<div id="xamsubmit">
+<label> Your test is complete </label>
+<form action="show.php" method="POST">
+<input type="hidden" value="" name="myfield" id="myfield">
+<input type="submit" value="submit" onclick="update();">
+
+</form>
+</div>
+<script>
+document.getElementById("minsleft").innerHTML=0;
+document.getElementById("secleft").innerHTML=cnt;
+var hourclock=setInterval(function(){cnt=cnt+1;updatetimer(cnt); if(cnt==600){clearInterval(hourclock); endtest();}},1000);
+function updatetimer(x)
+{
+	
+	var mins=Math.floor(x/60);
+	var sec=x-(mins*60);
+	document.getElementById("minsleft").innerHTML=mins;
+	document.getElementById("secleft").innerHTML=sec;
+	
+	
+}
+
+var question=["Q1:Portuguese is spoken in _______","Q2:The Enron project is a","Q3:Which of the following is used in pencils?","Q4:The Battle of Plassey was fought in","Q5:Who is the father of Geometry?","Q6:Choose the word which best expresses the meaning of AUGUST","Q7:Pick out the most effective word:The grapes are now ...... enough to be picked.","Q8:The building comprises ...... sixty rooms.","Q9:Find the correctly spelt word.","Q10:Antonyms of RELINQUISH","Q11:The cost price of 20 articles is the same as the selling price of x articles. If the profit is 25%, then the value of x is:","Q12:How much time will it take for an amount of Rs. 450 to yield Rs. 81 as interest at 4.5% per annum of simple interest?","Q13:The cube root of .000216 is: ","Q14:The least number, which when divided by 12, 15, 20 and 54 leaves in each case a remainder of 8 is:","Q15:What was the day of the week on 17th June, 1998? ","Q16:Which of the following computer language is used for artificial intelligence?","Q17:The brain of any computer system is","Q18:A single packet on a data link is known as","Q19:How many bit code is used by Murray code for TELEPRINTER machines.","Q20:What do the following declaration signify?  int *ptr[30];"];
+
+var op1=["Brazil","Gas-fired power project","Graphite","1757","Euclid","Dignified","Ripe","no preposition needed","Ominous","Possess","16","4","0.06","548","Wednesday","PROLOG","CU","Frame","5","ptr is a array of 30 pointers to integers."];
+
+var op2=["Argentina","Thermal power project","Charcoal","1748","Pythagoras","Common","Mature","by","Ommineous","Deny","15","4.5",".6","544","Monday","COBOL","CPU","Block","4","ptr is a pointer to an array of 30 integer pointers."];
+
+var op3=["Ecuador","Atomic power project","Silicon","1747","Aristotle","Ridiculous","Ready","with","Omineous","Abdicate","18","5","6","458","Tuesday","FORTRAN","ALU","Path","9","ptr is a array of 30 integer pointers."];
+
+Array.prototype.shuffle = function() {
+	var input = this;
+	
+	for (var i = input.length-1; i >=0; i--) {
+	
+		var randomIndex = Math.floor(Math.random()*(i+1)); 
+		var itemAtIndex = input[randomIndex]; 
+		
+		input[randomIndex] = input[i]; 
+		input[i] = itemAtIndex;
+	}
+	return input;
+}
+ //op4.shuffle();
+ document.getElementById("xamsubmit").style.visibility="hidden";
+starttest();
+
+ /*function test(){
+ var a=op1[qno];
+     var b= op2[qno];
+     var c=op3[qno];
+     var op4=['a','b','c'];
+	 }*/
+function endtest()
+{
+	document.getElementById("questionset").innerHTML="";
+		document.getElementById("xamsubmit").style.visibility="visible";
+}
+function starttest()
+{
+     var a=op1[qno];
+     var b= op2[qno];
+     var c=op3[qno];
+     var op4=[a,b,c];
+	 op4.shuffle();
+	document.getElementById("question").innerHTML=question[qno];
+	document.getElementById("op1").innerHTML=op4[qno1];
+	document.getElementById("op2").innerHTML=op4[qno2];
+	document.getElementById("op3").innerHTML=op4[qno3];
+	document.getElementById("option1").checked=false;
+	document.getElementById("option2").checked=false;
+	document.getElementById("option3").checked=false;
+	}
+function checkanswer()
+{
+if(document.getElementById("option1").checked)
+{
+var ans=document.getElementById("op1").innerHTML;
+if(ans==op1[qno])
+{
+score=score+1;
+}
+}
+if(document.getElementById("option2").checked)
+{
+var ans=document.getElementById("op2").innerHTML;
+if(ans==op1[qno])
+{
+score=score+1;
+}
+}
+if(document.getElementById("option3").checked)
+{
+var ans=document.getElementById("op3").innerHTML;
+if(ans==op1[qno])
+{
+score=score+1;
+}
+}
+
+	qno=qno+1; 
+	starttest();
+	if(qno==20)
+	{
+		document.getElementById("questionset").innerHTML="";
+		endtest();
+	}	
+}
+function update()
+{
+	document.getElementById("myfield").value=score;
+}
+</script>
+
+
+</body>
+</html>
